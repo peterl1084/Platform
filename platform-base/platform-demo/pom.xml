@@ -8,35 +8,26 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>platform-ui</artifactId>
+	<artifactId>platform-demo</artifactId>
 
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
-	<name>Platform for Vaadin UI</name>
+	<name>Platform for Vaadin Demo</name>
+	<description>Deployable demo application of Platform for Vaadin.</description>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.vaadin.platform</groupId>
-			<artifactId>platform-config</artifactId>
+			<artifactId>platform-ui</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>javax.enterprise</groupId>
-			<artifactId>cdi-api</artifactId>
-		</dependency>
-
 		<dependency>
 			<groupId>com.vaadin</groupId>
-			<artifactId>vaadin-server</artifactId>
+			<artifactId>vaadin-themes</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.vaadin</groupId>
-			<artifactId>vaadin-cdi</artifactId>
+			<artifactId>vaadin-client-compiled</artifactId>
 		</dependency>
 	</dependencies>
 
@@ -46,7 +37,10 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+			</plugin>
 		</plugins>
 	</build>
-
 </project>
