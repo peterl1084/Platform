@@ -58,7 +58,11 @@ public class Configuration {
 
     private List<Object> findConfigurationObjects() {
         Deque<Object> configs = new ArrayDeque<>();
-        configs.addLast(findDefaultConfigurationObject());
+        Optional<Object> defaultConfigurationOptional = findDefaultConfigurationObject();
+        if (defaultConfigurationOptional.isPresent()) {
+            configs.addLast(defaultConfigurationOptional.get());
+        }
+
         findUserConfigurationObjects().forEach(config -> configs.addFirst(config));
         return Collections.unmodifiableList(new ArrayList<>(configs));
     }
@@ -67,12 +71,14 @@ public class Configuration {
         return StreamSupport.stream(userConfigurations.spliterator(), false).collect(Collectors.toList());
     }
 
-    private Object findDefaultConfigurationObject() {
+    private Optional<Object> findDefaultConfigurationObject() {
         if (defaultConfigurations.isAmbiguous()) {
             throw new RuntimeException(
                     "More than one bean annotated with @PlatformDefaultConfiguration, please don't do that!");
+        } else if (defaultConfigurations.isUnsatisfied()) {
+            return Optional.empty();
         } else {
-            return defaultConfigurations.get();
+            return Optional.of(defaultConfigurations.get());
         }
     }
 }

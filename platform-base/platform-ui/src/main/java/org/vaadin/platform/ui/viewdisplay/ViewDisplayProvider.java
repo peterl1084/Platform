@@ -1,5 +1,6 @@
 package org.vaadin.platform.ui.viewdisplay;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -9,7 +10,6 @@ import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
 import org.vaadin.platform.config.Configuration;
-import org.vaadin.platform.ui.viewdisplay.horizontal.HorizontalViewDisplay;
 
 @ApplicationScoped
 public class ViewDisplayProvider {
@@ -22,20 +22,25 @@ public class ViewDisplayProvider {
     private Configuration config;
 
     public PViewDisplay provideViewDisplay() {
-        Class<? extends PViewDisplay> viewDisplayType = config.findConfiguredType(PViewDisplay.class)
-                .orElse(HorizontalViewDisplay.class);
+        Optional<Class<? extends PViewDisplay>> configuredViewDisplayType = config
+                .findConfiguredType(PViewDisplay.class);
+        if (!configuredViewDisplayType.isPresent()) {
+            throw new RuntimeException(
+                    "Could not find configuration for view display, please provide a method to configuration bean with return type of Class<? extends PViewDisplay>");
+        }
 
-        Instance<? extends PViewDisplay> selector = instantiator.select(viewDisplayType);
+        Instance<? extends PViewDisplay> selector = instantiator.select(configuredViewDisplayType.get());
         if (selector.isUnsatisfied()) {
-            throw new RuntimeException("No view display beans  found with configured type " + viewDisplayType);
+            throw new RuntimeException(
+                    "No view display beans  found with configured type " + configuredViewDisplayType.get());
         }
         if (selector.isAmbiguous()) {
             String types = StreamSupport.stream(instantiator.spliterator(), false)
                     .map(instance -> instance.getClass().getSimpleName()).collect(Collectors.joining(","));
             throw new RuntimeException("Found multiple view display implementations with same configured type "
-                    + viewDisplayType + ": " + types);
+                    + configuredViewDisplayType.get() + ": " + types);
         }
 
-        return instantiator.get();
+        return selector.get();
     }
 }

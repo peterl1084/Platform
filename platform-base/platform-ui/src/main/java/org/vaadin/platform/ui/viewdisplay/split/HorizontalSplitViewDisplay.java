@@ -1,0 +1,15 @@
+package org.vaadin.platform.ui.viewdisplay.split;
+
+import org.vaadin.platform.ui.viewdisplay.AbstractViewDisplay;
+import org.vaadin.platform.ui.viewdisplay.PanelViewAreaComponent;
+
+import com.vaadin.cdi.UIScoped;
+
+@UIScoped
+public class HorizontalSplitViewDisplay extends AbstractViewDisplay {
+    private static final long serialVersionUID = 1959956371487702902L;
+
+    public HorizontalSplitViewDisplay() {
+        super(new HorizontalSplitRootComponent(), new PanelViewAreaComponent());
+    }
+}
