@@ -1,6 +1,9 @@
 package org.vaadin.platform.config;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.WildcardType;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,21 +42,46 @@ public class Configuration {
             List<Object> configurationObjects = findConfigurationObjects();
             for (Object object : configurationObjects) {
                 List<Method> methods = Arrays.asList(object.getClass().getMethods());
-                List<Method> methodsFiltered = methods.stream()
-                        .filter(method -> method.getReturnType().equals(Class.class)).collect(Collectors.toList());
 
-                for (Method method : methodsFiltered) {
-                    Class result = (Class) method.invoke(object);
-                    if (baseType.isAssignableFrom(result)) {
-                        return Optional.of(result);
+                for (Method method : methods) {
+                    Class<?> genericReturnType = extractGenericReturnType(method);
+                    if (baseType.isAssignableFrom(genericReturnType)) {
+                        return Optional.of((Class) method.invoke(object));
                     }
                 }
+
             }
 
             return Optional.empty();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private Class<?> extractGenericReturnType(Method method) {
+        Type returnType = method.getGenericReturnType();
+        if (returnType == null) {
+            throw new RuntimeException("No generic return type");
+        }
+
+        if (returnType instanceof ParameterizedType) {
+            ParameterizedType pType = (ParameterizedType) returnType;
+            List<Type> typeArguments = Arrays.asList(pType.getActualTypeArguments());
+            if (typeArguments.size() != 1) {
+                return null;
+            }
+            for (Type type : typeArguments) {
+                if (type instanceof WildcardType) {
+                    WildcardType wcType = (WildcardType) type;
+                    Type wcTypeLowerBound = Arrays.asList(wcType.getUpperBounds()).get(0);
+                    return (Class) wcTypeLowerBound;
+                } else {
+                    return (Class) type;
+                }
+            }
+        }
+
+        throw new RuntimeException("Was not parameterized type");
     }
 
     private List<Object> findConfigurationObjects() {

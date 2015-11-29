@@ -9,7 +9,7 @@ public class PlatformDefaultTestConfiguration {
         return TestTypeAImpl1.class;
     }
 
-    public Class<? extends TestTypeB> getTestTypeB() {
+    public Class<TestTypeBImpl1> getTestTypeB() {
         return TestTypeBImpl1.class;
     }
 }
