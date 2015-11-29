@@ -37,6 +37,7 @@ public class Configuration {
      * @param baseType
      * @return the configured type of given specified base type.
      */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public <T> Optional<Class<? extends T>> findConfiguredType(Class<T> baseType) {
         try {
             List<Object> configurationObjects = findConfigurationObjects();
@@ -58,6 +59,7 @@ public class Configuration {
         }
     }
 
+    @SuppressWarnings("rawtypes")
     private Class<?> extractGenericReturnType(Method method) {
         Type returnType = method.getGenericReturnType();
         if (returnType == null) {
