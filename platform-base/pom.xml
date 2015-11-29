@@ -28,6 +28,7 @@
 		<module>platform-ui</module>
 		<module>platform-demo</module>
 		<module>platform-config</module>
+		<module>platform-data</module>
 	</modules>
 
 	<dependencyManagement>

@@ -6,10 +6,9 @@
 		<artifactId>platform-base</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>platform-config</artifactId>
 
-	<name>Platform for Vaadin - Config</name>
-	<description>Configuration tools for the Platform</description>
+	<artifactId>platform-data</artifactId>
+	<name>Platform for Vaadin - Data</name>
 
 	<dependencies>
 		<dependency>
@@ -35,5 +34,5 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
 </project>
