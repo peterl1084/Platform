@@ -26,11 +26,11 @@
 	</properties>
 
 	<modules>
-		<module>platform-ui</module>
-		<module>platform-demo</module>
 		<module>platform-config</module>
 		<module>platform-data</module>
+		<module>platform-ui</module>
 		<module>platform-sidemenu</module>
+		<module>platform-demo</module>
 	</modules>
 
 	<dependencyManagement>
