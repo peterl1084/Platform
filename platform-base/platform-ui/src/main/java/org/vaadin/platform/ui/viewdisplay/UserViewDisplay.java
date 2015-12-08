@@ -5,7 +5,7 @@ import java.util.Optional;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
-import org.vaadin.platform.configuration.factory.BeanProvider;
+import org.vaadin.platform.configuration.bean.BeanProvider;
 
 import com.vaadin.cdi.UIScoped;
 import com.vaadin.navigator.View;

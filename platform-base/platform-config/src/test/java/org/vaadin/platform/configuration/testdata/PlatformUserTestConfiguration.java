@@ -1,6 +1,6 @@
-package org.vaadin.platform.config.testdata;
+package org.vaadin.platform.configuration.testdata;
 
-import org.vaadin.platform.config.SpecializedConfiguration;
+import org.vaadin.platform.configuration.SpecializedConfiguration;
 
 @SpecializedConfiguration
 public class PlatformUserTestConfiguration {

@@ -1,6 +1,6 @@
-package org.vaadin.platform.config.testdata;
+package org.vaadin.platform.configuration.testdata;
 
-import org.vaadin.platform.config.DefaultConfiguration;
+import org.vaadin.platform.configuration.DefaultConfiguration;
 
 @DefaultConfiguration
 public class PlatformDefaultTestConfiguration {

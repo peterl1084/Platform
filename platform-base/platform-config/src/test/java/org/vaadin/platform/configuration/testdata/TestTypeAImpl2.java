@@ -1,4 +1,4 @@
-package org.vaadin.platform.config.testdata;
+package org.vaadin.platform.configuration.testdata;
 
 public class TestTypeAImpl2 implements TestTypeA {
 

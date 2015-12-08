@@ -1,4 +1,4 @@
-package org.vaadin.platform.configuration.factory;
+package org.vaadin.platform.configuration.bean;
 
 import java.lang.annotation.Annotation;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package org.vaadin.platform.configuration.factory;
+package org.vaadin.platform.configuration.bean;
 
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
@@ -9,10 +9,10 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
-import org.vaadin.platform.config.ConfigurationProvider;
+import org.vaadin.platform.configuration.ConfigurationProvider;
 
 @ApplicationScoped
-public class BeanProviderBean implements BeanProvider {
+class BeanProviderBean implements BeanProvider {
 
     @Inject
     private Instance<Object> instantiator;

@@ -3,7 +3,7 @@ package org.vaadin.platform.ui.navigation;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
-import org.vaadin.platform.configuration.factory.BeanProvider;
+import org.vaadin.platform.configuration.bean.BeanProvider;
 import org.vaadin.platform.ui.viewdisplay.PlatformViewDisplay;
 
 import com.vaadin.cdi.CDIViewProvider;

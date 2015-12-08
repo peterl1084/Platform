@@ -2,7 +2,7 @@ package org.vaadin.platform.ui;
 
 import javax.inject.Inject;
 
-import org.vaadin.platform.configuration.factory.BeanProvider;
+import org.vaadin.platform.configuration.bean.BeanProvider;
 import org.vaadin.platform.ui.viewdisplay.PlatformViewDisplay;
 
 import com.vaadin.server.VaadinRequest;

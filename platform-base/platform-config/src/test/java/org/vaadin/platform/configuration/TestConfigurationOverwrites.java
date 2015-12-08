@@ -1,4 +1,4 @@
-package org.vaadin.platform.config;
+package org.vaadin.platform.configuration;
 
 import javax.inject.Inject;
 
@@ -7,12 +7,13 @@ import org.jglue.cdiunit.CdiRunner;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.vaadin.platform.config.testdata.PlatformDefaultTestConfiguration;
-import org.vaadin.platform.config.testdata.PlatformUserTestConfiguration;
-import org.vaadin.platform.config.testdata.TestTypeA;
-import org.vaadin.platform.config.testdata.TestTypeAImpl2;
-import org.vaadin.platform.config.testdata.TestTypeB;
-import org.vaadin.platform.config.testdata.TestTypeBExtension;
+import org.vaadin.platform.configuration.ConfigurationBean;
+import org.vaadin.platform.configuration.testdata.PlatformDefaultTestConfiguration;
+import org.vaadin.platform.configuration.testdata.PlatformUserTestConfiguration;
+import org.vaadin.platform.configuration.testdata.TestTypeA;
+import org.vaadin.platform.configuration.testdata.TestTypeAImpl2;
+import org.vaadin.platform.configuration.testdata.TestTypeB;
+import org.vaadin.platform.configuration.testdata.TestTypeBExtension;
 
 @RunWith(CdiRunner.class)
 @AdditionalClasses({ PlatformDefaultTestConfiguration.class, PlatformUserTestConfiguration.class })

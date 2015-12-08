@@ -1,4 +1,4 @@
-package org.vaadin.platform.config;
+package org.vaadin.platform.configuration;
 
 import java.util.Optional;
 

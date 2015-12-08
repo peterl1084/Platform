@@ -1,4 +1,4 @@
-package org.vaadin.platform.config;
+package org.vaadin.platform.configuration;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
@@ -19,7 +19,7 @@ import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
 @ApplicationScoped
-public class ConfigurationBean implements ConfigurationProvider {
+class ConfigurationBean implements ConfigurationProvider {
 
     @Inject
     @DefaultConfiguration
