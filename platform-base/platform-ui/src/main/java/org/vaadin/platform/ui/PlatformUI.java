@@ -2,7 +2,8 @@ package org.vaadin.platform.ui;
 
 import javax.inject.Inject;
 
-import org.vaadin.platform.ui.viewdisplay.ViewDisplayProvider;
+import org.vaadin.platform.configuration.factory.BeanProvider;
+import org.vaadin.platform.ui.viewdisplay.PlatformViewDisplay;
 
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinSession;
@@ -14,11 +15,14 @@ public abstract class PlatformUI extends UI {
     private String embedId;
 
     @Inject
-    private ViewDisplayProvider viewDisplayProvider;
+    private BeanProvider provider;
+
+    private PlatformViewDisplay viewDisplay;
 
     @Override
     protected void init(VaadinRequest request) {
-        setContent(viewDisplayProvider.provideViewDisplay().getRoot());
+        viewDisplay = provider.getReference(PlatformViewDisplay.class);
+        setContent(viewDisplay);
     }
 
     @Override
