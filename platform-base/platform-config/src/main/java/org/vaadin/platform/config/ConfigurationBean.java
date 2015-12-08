@@ -19,14 +19,14 @@ import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
 @ApplicationScoped
-public class Configuration {
+public class ConfigurationBean implements ConfigurationProvider {
 
     @Inject
-    @PlatformDefaultConfiguration
+    @DefaultConfiguration
     private Instance<Object> defaultConfigurations;
 
     @Inject
-    @PlatformUserConfiguration
+    @SpecializedConfiguration
     private Instance<Object> userConfigurations;
 
     /**
@@ -37,6 +37,7 @@ public class Configuration {
      * @param baseType
      * @return the configured type of given specified base type.
      */
+    @Override
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public <T> Optional<Class<? extends T>> findConfiguredType(Class<T> baseType) {
         try {
@@ -46,11 +47,14 @@ public class Configuration {
 
                 for (Method method : methods) {
                     Class<?> genericReturnType = extractGenericReturnType(method);
+                    if (genericReturnType == null) {
+                        continue;
+                    }
+
                     if (baseType.isAssignableFrom(genericReturnType)) {
                         return Optional.of((Class) method.invoke(object));
                     }
                 }
-
             }
 
             return Optional.empty();
@@ -62,9 +66,6 @@ public class Configuration {
     @SuppressWarnings("rawtypes")
     private Class<?> extractGenericReturnType(Method method) {
         Type returnType = method.getGenericReturnType();
-        if (returnType == null) {
-            throw new RuntimeException("No generic return type");
-        }
 
         if (returnType instanceof ParameterizedType) {
             ParameterizedType pType = (ParameterizedType) returnType;
@@ -83,7 +84,7 @@ public class Configuration {
             }
         }
 
-        throw new RuntimeException("Was not parameterized type");
+        return null;
     }
 
     private List<Object> findConfigurationObjects() {

@@ -1,12 +1,10 @@
 package org.vaadin.platform.data.property;
 
-import java.io.Serializable;
-
 /**
  * PropertyTypeAdder is a role interface for PropertySets that allows adding
  * properties with type information.
  */
-public interface PropertyTypeAdder extends Serializable {
+public interface PropertyTypeAdder {
 
     /**
      * Adds propertyId with given propertyType. If propertyId or propertyType is

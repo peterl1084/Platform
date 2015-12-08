@@ -19,7 +19,7 @@ import org.vaadin.platform.config.testdata.TestTypeBExtension;
 public class TestConfigurationOverwrites {
 
     @Inject
-    private Configuration configuration;
+    private ConfigurationBean configuration;
 
     @Test
     public void testFetchingDefaultConfiguration() {

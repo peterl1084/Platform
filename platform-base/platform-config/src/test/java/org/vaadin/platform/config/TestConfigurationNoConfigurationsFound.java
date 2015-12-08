@@ -17,7 +17,7 @@ import org.vaadin.platform.config.testdata.TestTypeB;
 public class TestConfigurationNoConfigurationsFound {
 
     @Inject
-    private Configuration configuration;
+    private ConfigurationBean configuration;
 
     @Test
     public void testFetchingDefaultConfiguration() {

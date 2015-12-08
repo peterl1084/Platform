@@ -10,6 +10,6 @@ import javax.inject.Qualifier;
 @Qualifier
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.TYPE, ElementType.PARAMETER })
-public @interface PanelViewArea {
+public @interface ViewRoot {
 
 }

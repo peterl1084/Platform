@@ -1,8 +1,8 @@
 package org.vaadin.platform.config.testdata;
 
-import org.vaadin.platform.config.PlatformDefaultConfiguration;
+import org.vaadin.platform.config.DefaultConfiguration;
 
-@PlatformDefaultConfiguration
+@DefaultConfiguration
 public class PlatformDefaultTestConfiguration {
 
     public Class<? extends TestTypeA> getTestTypeA() {

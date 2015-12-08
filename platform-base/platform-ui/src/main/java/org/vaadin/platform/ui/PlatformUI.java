@@ -18,7 +18,7 @@ public abstract class PlatformUI extends UI {
 
     @Override
     protected void init(VaadinRequest request) {
-        setContent(viewDisplayProvider.provideViewDisplay().getRootComponent());
+        setContent(viewDisplayProvider.provideViewDisplay().getRoot());
     }
 
     @Override

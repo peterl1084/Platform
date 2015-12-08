@@ -14,11 +14,11 @@ import org.vaadin.platform.config.testdata.TestTypeB;
 import org.vaadin.platform.config.testdata.TestTypeBImpl1;
 
 @RunWith(CdiRunner.class)
-@AdditionalClasses({ PlatformDefaultTestConfiguration.class })
+@AdditionalClasses({ ConfigurationBean.class, PlatformDefaultTestConfiguration.class })
 public class TestConfigurationDefaults {
 
     @Inject
-    private Configuration configuration;
+    private ConfigurationProvider configuration;
 
     @Test
     public void testFetchingDefaultConfiguration() {

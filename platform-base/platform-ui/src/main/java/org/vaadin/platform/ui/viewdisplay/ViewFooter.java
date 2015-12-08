@@ -1,4 +1,4 @@
-package org.vaadin.platform.config;
+package org.vaadin.platform.ui.viewdisplay;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -9,7 +9,7 @@ import javax.inject.Qualifier;
 
 @Qualifier
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.TYPE, ElementType.FIELD })
-public @interface PlatformUserConfiguration {
+@Target({ ElementType.TYPE, ElementType.PARAMETER })
+public @interface ViewFooter {
 
 }

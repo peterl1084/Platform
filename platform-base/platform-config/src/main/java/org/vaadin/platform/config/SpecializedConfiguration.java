@@ -7,9 +7,13 @@ import java.lang.annotation.Target;
 
 import javax.inject.Qualifier;
 
+/**
+ * SpecializedConfiguration is a qualifier annotation that can be applied on
+ * beans providing specializing (and overwriting) type configuration.
+ */
 @Qualifier
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.TYPE, ElementType.FIELD })
-public @interface PlatformDefaultConfiguration {
+public @interface SpecializedConfiguration {
 
 }

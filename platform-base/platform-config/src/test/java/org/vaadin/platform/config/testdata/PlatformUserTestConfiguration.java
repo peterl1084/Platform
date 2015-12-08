@@ -1,8 +1,8 @@
 package org.vaadin.platform.config.testdata;
 
-import org.vaadin.platform.config.PlatformUserConfiguration;
+import org.vaadin.platform.config.SpecializedConfiguration;
 
-@PlatformUserConfiguration
+@SpecializedConfiguration
 public class PlatformUserTestConfiguration {
 
     public Class<? extends TestTypeA> getMyTestTypeA() {
