@@ -22,6 +22,7 @@
 
 		<maven.compiler.plugin.version>3.3</maven.compiler.plugin.version>
 		<maven.war.plugin.version>2.6</maven.war.plugin.version>
+		<maven.jar.plugin.version>2.6</maven.jar.plugin.version>
 	</properties>
 
 	<modules>
@@ -29,6 +30,7 @@
 		<module>platform-demo</module>
 		<module>platform-config</module>
 		<module>platform-data</module>
+		<module>platform-sidemenu</module>
 	</modules>
 
 	<dependencyManagement>
@@ -95,6 +97,11 @@
 						<source>${java.version}</source>
 						<target>${java.version}</target>
 					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>${maven.jar.plugin.version}</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>

@@ -35,16 +35,14 @@ public class UserViewDisplay extends CustomComponent implements PlatformViewDisp
     @PostConstruct
     protected void initialize() {
         viewArea = beanProvider.getReference(ViewAreaComponent.class);
-        Optional<ViewMenuComponent> menuOptional = beanProvider.getOptionalReference(ViewMenuComponent.class,
-                new MenuLevelLiteral(1));
+        Optional<SideMenu> menuOptional = beanProvider.getOptionalReference(SideMenu.class);
 
         if (menuOptional.isPresent()) {
             mainLayout.addComponent(menuOptional.get());
-            mainLayout.setExpandRatio(menuOptional.get(), 20);
         }
 
-        mainLayout.addComponent(viewArea);
-        mainLayout.setExpandRatio(viewArea, menuOptional.isPresent() ? 80 : 100);
+        mainLayout.addComponent(viewArea.asComponent());
+        mainLayout.setExpandRatio(viewArea.asComponent(), 1);
     }
 
     @Override

@@ -1,0 +1,9 @@
+@import "../valo/valo";
+@import "addons.scss";
+@import "platform.scss";
+
+.platform {
+  @include valo;
+  @include addons;
+  @include platform;
+}

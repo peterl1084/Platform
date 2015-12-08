@@ -22,7 +22,7 @@ public abstract class PlatformUI extends UI {
     @Override
     protected void init(VaadinRequest request) {
         viewDisplay = provider.getReference(PlatformViewDisplay.class);
-        setContent(viewDisplay);
+        setContent(viewDisplay.asComponent());
     }
 
     @Override

@@ -8,18 +8,22 @@ import com.vaadin.ui.Component;
  * PViewDisplay is the general top level interface for all view displays that
  * make up the base layouting of the Platform UI.
  */
-public interface PlatformViewDisplay extends ViewDisplay, Component {
+public interface PlatformViewDisplay extends ViewDisplay {
 
     /**
      * @return ViewArea of ViewDisplay that hosts the actual changing view area.
      */
     ViewAreaComponent getViewArea();
 
-    public interface ViewAreaComponent extends ViewPart {
+    public interface ViewAreaComponent {
         void setView(View view);
+
+        default Component asComponent() {
+            return Component.class.cast(this);
+        }
     }
 
-    public interface ViewPart extends Component {
-
+    default Component asComponent() {
+        return Component.class.cast(this);
     }
 }
