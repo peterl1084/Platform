@@ -2,10 +2,10 @@ package org.vaadin.platform.ui.viewdisplay;
 
 import java.util.Optional;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.vaadin.platform.configuration.bean.BeanProvider;
+import org.vaadin.platform.ui.menu.SideMenu;
 
 import com.vaadin.cdi.UIScoped;
 import com.vaadin.navigator.View;
@@ -13,46 +13,35 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 
 @UIScoped
-public class UserViewDisplay extends CustomComponent implements PlatformViewDisplay {
+public class DefaultViewDisplayBean extends CustomComponent implements PlatformViewDisplay {
     private static final long serialVersionUID = 6108890114881391778L;
 
-    @Inject
-    private BeanProvider beanProvider;
-
-    private ViewAreaComponent viewArea;
+    private ViewArea viewArea;
 
     private HorizontalLayout mainLayout;
 
-    public UserViewDisplay() {
+    @Inject
+    public DefaultViewDisplayBean(BeanProvider beanProvider) {
         setSizeFull();
 
         mainLayout = new HorizontalLayout();
         mainLayout.setSizeFull();
 
-        setCompositionRoot(mainLayout);
-    }
-
-    @PostConstruct
-    protected void initialize() {
-        viewArea = beanProvider.getReference(ViewAreaComponent.class);
+        viewArea = beanProvider.getReference(ViewArea.class);
         Optional<SideMenu> menuOptional = beanProvider.getOptionalReference(SideMenu.class);
 
         if (menuOptional.isPresent()) {
-            mainLayout.addComponent(menuOptional.get());
+            mainLayout.addComponent(menuOptional.get().asComponent());
         }
 
         mainLayout.addComponent(viewArea.asComponent());
         mainLayout.setExpandRatio(viewArea.asComponent(), 1);
+
+        setCompositionRoot(mainLayout);
     }
 
     @Override
     public void showView(View view) {
-
+        viewArea.showView(view);
     }
-
-    @Override
-    public ViewAreaComponent getViewArea() {
-        return viewArea;
-    }
-
 }

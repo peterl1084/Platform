@@ -52,6 +52,10 @@ class ConfigurationBean implements ConfigurationProvider {
                     }
 
                     if (baseType.isAssignableFrom(genericReturnType)) {
+                        if (!method.isAccessible()) {
+                            method.setAccessible(true);
+                        }
+
                         return Optional.of((Class) method.invoke(object));
                     }
                 }

@@ -10,6 +10,10 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.UI;
 
+/**
+ * PlatformUI is abstract base class for all UI's that wish to utilize Platform
+ * for Vaadin functionality.
+ */
 public abstract class PlatformUI extends UI {
     private static final long serialVersionUID = -4457107924174041117L;
     private int uiId = -1;

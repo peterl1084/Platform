@@ -1,6 +1,6 @@
 package org.vaadin.platform.sidemenu;
 
-import org.vaadin.platform.ui.viewdisplay.SideMenu;
+import org.vaadin.platform.ui.menu.SideMenu;
 
 import com.vaadin.cdi.UIScoped;
 import com.vaadin.ui.CssLayout;
