@@ -3,6 +3,7 @@ package org.vaadin.platform.ui;
 import javax.inject.Inject;
 
 import org.vaadin.platform.configuration.bean.BeanProvider;
+import org.vaadin.platform.ui.navigation.NavigationManager;
 import org.vaadin.platform.ui.viewdisplay.PlatformViewDisplay;
 
 import com.vaadin.server.VaadinRequest;
@@ -19,10 +20,14 @@ public abstract class PlatformUI extends UI {
 
     private PlatformViewDisplay viewDisplay;
 
+    @Inject
+    private NavigationManager navigationManager;
+
     @Override
     protected void init(VaadinRequest request) {
         viewDisplay = provider.getReference(PlatformViewDisplay.class);
         setContent(viewDisplay.asComponent());
+        navigationManager.initialize();
     }
 
     @Override
