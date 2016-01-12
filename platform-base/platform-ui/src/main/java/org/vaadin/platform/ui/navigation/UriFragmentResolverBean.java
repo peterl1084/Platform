@@ -5,7 +5,7 @@ package org.vaadin.platform.ui.navigation;
  * UriFragmentResolver and is automatically configured by default configuration
  * bean.
  */
-public class DefaultFragmentResolverBean implements UriFragmentResolver {
+public class UriFragmentResolverBean implements UriFragmentResolver {
     private static final char VIEW_SEPARATOR_CHAR = '/';
 
     @Override

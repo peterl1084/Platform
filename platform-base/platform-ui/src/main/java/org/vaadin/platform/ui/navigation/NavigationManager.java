@@ -6,10 +6,7 @@ package org.vaadin.platform.ui.navigation;
  */
 public interface NavigationManager {
 
-    /**
-     * Called at Platform startup time to initialize navigation management.
-     */
-    void initialize();
+    void navigateTo(String view);
 
     /**
      * Causes navigation to given view with given parameters.

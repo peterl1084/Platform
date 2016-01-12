@@ -1,5 +1,6 @@
 package org.vaadin.platform.ui.navigation;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 
@@ -9,34 +10,32 @@ import org.vaadin.platform.ui.viewdisplay.PlatformViewDisplay;
 
 import com.vaadin.cdi.NormalUIScoped;
 import com.vaadin.navigator.Navigator;
-import com.vaadin.navigator.Navigator.UriFragmentManager;
 import com.vaadin.navigator.ViewProvider;
 import com.vaadin.server.Page;
 import com.vaadin.server.Page.UriFragmentChangedEvent;
 import com.vaadin.ui.UI;
 
 @NormalUIScoped
-class NavigationManagerBean implements NavigationManager {
-    private Navigator navigator;
+class NavigationManagerBean extends Navigator implements NavigationManager {
+    private static final long serialVersionUID = 1546108773276819826L;
+
     private ViewProvider viewProvider;
 
     @Inject
     private Event<NavigationEvent> navigationEventSource;
 
     @Inject
-    public NavigationManagerBean(BeanProvider beanProvider) {
+    private BeanProvider beanProvider;
+
+    @PostConstruct
+    protected void initialize() {
         PlatformViewDisplay viewDisplay = beanProvider.getReference(PlatformViewDisplay.class);
         UriFragmentResolver fragmentResolver = beanProvider.getReference(UriFragmentResolver.class);
-        navigator = new Navigator(UI.getCurrent(), new UriFragmentHandler(Page.getCurrent(), fragmentResolver),
-                viewDisplay);
+
+        init(UI.getCurrent(), new UriFragmentHandler(Page.getCurrent(), fragmentResolver), viewDisplay);
 
         viewProvider = beanProvider.getReference(ViewProvider.class);
-        navigator.addProvider(viewProvider);
-    }
-
-    @Override
-    public void initialize() {
-
+        addProvider(viewProvider);
     }
 
     @Override
