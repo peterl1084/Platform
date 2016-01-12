@@ -8,8 +8,24 @@ import javax.enterprise.inject.spi.BeanManager;
 
 import org.vaadin.platform.ui.BeanManagerAccessor;
 
+/**
+ * HasView is a role interface that presenters implement for associating view
+ * object with presenter. Implementing this interface in Presenter
+ * implementation is completely optional as not all presenters need to talk back
+ * to the view in case they only work as forward data delegates. Implementing
+ * this interface in presenter allows the presenter to talk back to its own view
+ * instance that it governs.
+ * 
+ * @author Peter / Vaadin
+ *
+ * @param <V>
+ *            type of the view
+ */
 public interface HasView<V extends HasPresenter> {
 
+    /**
+     * @return reference to view V that this presenter governs
+     */
     default V getView() {
         Class<V> viewType = getViewType();
         if (viewType == null) {
@@ -34,5 +50,8 @@ public interface HasView<V extends HasPresenter> {
         return view;
     }
 
+    /**
+     * @return type of the view
+     */
     Class<V> getViewType();
 }

@@ -9,9 +9,11 @@ import javax.enterprise.inject.spi.BeanManager;
 import org.vaadin.platform.ui.BeanManagerAccessor;
 
 /**
- * HasPresenter is a role interface that associates presenter object with its
- * implementor. This interface provides access to presenter instance that can be
- * owner specific according to its scoping rules.
+ * HasPresenter is a role interface that views implement for associating
+ * presenter object with view. Implementing this interface in View
+ * implementation is completely optional but once implemented allows using MVP
+ * pattern for structuring the views. This interface provides an access for
+ * presenter instance that can be view specific according to its scoping rules.
  * 
  * @author Peter / Vaadin
  *
@@ -22,8 +24,7 @@ import org.vaadin.platform.ui.BeanManagerAccessor;
 public interface HasPresenter<P> {
 
     /**
-     * @return reference to or new instance of presenter P according to
-     *         presenter's scoping rules.
+     * @return reference to presenter P
      */
     default P getPresenter() {
         Class<P> presenterType = getPresenterType();
@@ -49,5 +50,8 @@ public interface HasPresenter<P> {
         return presenter;
     }
 
+    /**
+     * @return type of the presenter
+     */
     Class<P> getPresenterType();
 }
