@@ -32,10 +32,10 @@ public interface HasPresenter<P> {
         }
 
         BeanManager beanManager = BeanManagerAccessor.getBeanManager();
-        Set<Bean<?>> presenterCandidates = beanManager.getBeans(presenterType);
+        Set<Bean<?>> presenterCandidates = beanManager.getBeans(presenterType, new PresenterLiteral());
         if (presenterCandidates.isEmpty()) {
-            throw new RuntimeException(
-                    "No candidate presenters available for type " + presenterType.getCanonicalName());
+            throw new RuntimeException("No candidate presenters available for type " + presenterType.getCanonicalName()
+                    + " check that the presenter type is annotated with @Presenter");
         }
         if (presenterCandidates.size() > 1) {
             throw new RuntimeException(

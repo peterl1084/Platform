@@ -23,10 +23,7 @@ public class CustomerView extends CustomComponent implements IsNavigable, HasPre
 
     @PostConstruct
     protected void initialize() {
-        for (int i = 0; i < 10; i++) {
-            CustomerViewPresenter presenter = getPresenter();
-            System.out.println(presenter);
-        }
+        CustomerViewPresenter presenter = getPresenter();
     }
 
     @Override
