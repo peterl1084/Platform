@@ -23,7 +23,6 @@ public class CustomerView extends CustomComponent implements IsNavigable, HasPre
 
         Button button = new Button("Click", e -> getPresenter().onButtonClicked());
         layout.addComponent(button);
-
     }
 
     @Override
