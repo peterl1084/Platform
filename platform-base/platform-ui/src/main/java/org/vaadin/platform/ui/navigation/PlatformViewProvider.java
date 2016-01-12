@@ -22,6 +22,7 @@ import org.vaadin.platform.ui.view.ViewComposition;
 
 import com.vaadin.cdi.access.AccessControl;
 import com.vaadin.cdi.internal.CDIUtil;
+import com.vaadin.cdi.internal.Conventions;
 import com.vaadin.cdi.internal.VaadinViewChangeCleanupEvent;
 import com.vaadin.cdi.internal.VaadinViewChangeEvent;
 import com.vaadin.cdi.internal.VaadinViewCreationEvent;
@@ -103,7 +104,7 @@ public class PlatformViewProvider implements ViewProvider {
 
         if (isUserHavingAccessToView(viewBean)) {
             if (viewBean.getBeanClass().isAnnotationPresent(ViewComposition.class)) {
-                String specifiedViewName = deriveMappingForView(viewBean.getBeanClass());
+                String specifiedViewName = Conventions.deriveMappingForView(viewBean.getBeanClass());
                 if (!specifiedViewName.isEmpty()) {
                     return specifiedViewName;
                 }
@@ -142,7 +143,7 @@ public class PlatformViewProvider implements ViewProvider {
                 continue;
             }
 
-            String mapping = deriveMappingForView(beanClass);
+            String mapping = Conventions.deriveMappingForView(beanClass);
             getLogger().log(Level.FINER, "{0} is annotated, the viewName is \"{1}\"",
                     new Object[] { beanClass.getName(), mapping });
 
@@ -282,7 +283,7 @@ public class PlatformViewProvider implements ViewProvider {
             if (beanClass.getAnnotation(ViewComposition.class) == null) {
                 continue;
             }
-            String mapping = deriveMappingForView(viewBean.getBeanClass());
+            String mapping = Conventions.deriveMappingForView(viewBean.getBeanClass());
             if (mapping != null) {
                 mappingList.add(mapping);
             }
@@ -297,14 +298,6 @@ public class PlatformViewProvider implements ViewProvider {
         });
 
         return mappingList;
-    }
-
-    public static String deriveMappingForView(Class<?> beanClass) {
-        if (beanClass.isAnnotationPresent(ViewComposition.class)) {
-            return beanClass.getAnnotation(ViewComposition.class).name();
-        }
-
-        return null;
     }
 
     public static VaadinViewChangeCleanupEvent getCleanupEvent() {
