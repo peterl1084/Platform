@@ -14,7 +14,11 @@ public class UriFragmentResolverBean implements UriFragmentResolver {
     }
 
     @Override
-    public String resolveView(String uriFragment) {
+    public String resolveViewName(String uriFragment) {
+        if (uriFragment.startsWith("!")) {
+            uriFragment = uriFragment.substring(1);
+        }
+
         int index = uriFragment.indexOf(VIEW_SEPARATOR_CHAR);
         if (index == -1) {
             return uriFragment;
@@ -27,7 +31,7 @@ public class UriFragmentResolverBean implements UriFragmentResolver {
     public String resolveParameters(String uriFragment) {
         int index = uriFragment.indexOf(VIEW_SEPARATOR_CHAR);
         if (index == -1) {
-            return null;
+            return "";
         }
 
         return uriFragment.substring(index + 1, uriFragment.length());

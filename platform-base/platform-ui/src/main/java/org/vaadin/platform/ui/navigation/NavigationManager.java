@@ -6,14 +6,5 @@ package org.vaadin.platform.ui.navigation;
  */
 public interface NavigationManager {
 
-    void navigateTo(String view);
-
-    /**
-     * Causes navigation to given view with given parameters.
-     * 
-     * @param view
-     * @param parameters
-     */
-    void navigateTo(String view, String parameters);
-
+    void navigateTo(String state);
 }

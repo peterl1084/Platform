@@ -10,6 +10,8 @@ import org.vaadin.platform.ui.viewdisplay.PlatformViewDisplay;
 
 import com.vaadin.cdi.NormalUIScoped;
 import com.vaadin.navigator.Navigator;
+import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.navigator.ViewProvider;
 import com.vaadin.server.Page;
 import com.vaadin.server.Page.UriFragmentChangedEvent;
@@ -19,48 +21,72 @@ import com.vaadin.ui.UI;
 class NavigationManagerBean extends Navigator implements NavigationManager {
     private static final long serialVersionUID = 1546108773276819826L;
 
-    private ViewProvider viewProvider;
-
     @Inject
     private Event<NavigationEvent> navigationEventSource;
 
     @Inject
     private BeanProvider beanProvider;
 
+    private UriFragmentResolver fragmentResolver;
+
+    private ViewProvider viewProvider;
+
+    private String navigationState;
+
     @PostConstruct
     protected void initialize() {
         PlatformViewDisplay viewDisplay = beanProvider.getReference(PlatformViewDisplay.class);
-        UriFragmentResolver fragmentResolver = beanProvider.getReference(UriFragmentResolver.class);
-
-        init(UI.getCurrent(), new UriFragmentHandler(Page.getCurrent(), fragmentResolver), viewDisplay);
-
+        fragmentResolver = beanProvider.getReference(UriFragmentResolver.class);
+        init(UI.getCurrent(), new UriFragmentHandler(Page.getCurrent()), viewDisplay);
         viewProvider = beanProvider.getReference(ViewProvider.class);
-        addProvider(viewProvider);
     }
 
     @Override
-    public void navigateTo(String view, String parameters) {
-        navigationEventSource.fire(new NavigationEvent(view, parameters, EventType.PROGRAMMATIC));
+    public String getState() {
+        return navigationState;
+    }
+
+    @Override
+    public void navigateTo(String state) {
+        String viewName = viewProvider.getViewName(state);
+        String parameters = fragmentResolver.resolveParameters(state);
+        if (viewName == null) {
+            revertNavigation();
+            return;
+        }
+
+        View targetView = viewProvider.getView(viewName);
+
+        ViewChangeEvent event = new ViewChangeEvent(this, getCurrentView(), targetView, viewName, parameters);
+        boolean navigationAllowed = beforeViewChange(event);
+
+        if (!navigationAllowed) {
+            revertNavigation();
+            return;
+        }
+
+        updateNavigationState(event);
+
+        getDisplay().showView(targetView);
+
+        switchView(event);
+
+        targetView.enter(event);
+        navigationEventSource.fire(new NavigationEvent(viewName, parameters, EventType.PROGRAMMATIC));
+
+        fireAfterViewChange(event);
     }
 
     private class UriFragmentHandler extends UriFragmentManager {
-        private UriFragmentResolver fragmentResolver;
-
-        public UriFragmentHandler(Page page, UriFragmentResolver fragmentResolver) {
-            super(page);
-            this.fragmentResolver = fragmentResolver;
-        }
-
         private static final long serialVersionUID = -2241509222046244059L;
+
+        public UriFragmentHandler(Page page) {
+            super(page);
+        }
 
         @Override
         public void uriFragmentChanged(UriFragmentChangedEvent event) {
-            if (fragmentResolver.isFragmentValid(event.getUriFragment())) {
-                String view = fragmentResolver.resolveView(event.getUriFragment());
-                String parameters = fragmentResolver.resolveParameters(event.getUriFragment());
-
-                navigationEventSource.fire(new NavigationEvent(view, parameters, EventType.FRAGMENT));
-            }
+            navigateTo(event.getUriFragment());
         }
     }
 }

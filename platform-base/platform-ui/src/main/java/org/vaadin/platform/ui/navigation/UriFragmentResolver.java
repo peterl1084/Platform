@@ -19,7 +19,7 @@ public interface UriFragmentResolver {
      * @return part of the URI fragment that is considered to resemble the
      *         target view name. (actual navigation target)
      */
-    String resolveView(String uriFragment);
+    String resolveViewName(String uriFragment);
 
     /**
      * @param uriFragment

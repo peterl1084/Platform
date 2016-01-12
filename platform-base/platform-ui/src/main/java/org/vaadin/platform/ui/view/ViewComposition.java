@@ -7,6 +7,7 @@ import java.lang.annotation.Target;
 
 import javax.enterprise.inject.Stereotype;
 import javax.enterprise.util.Nonbinding;
+import javax.inject.Qualifier;
 
 import com.vaadin.cdi.ViewScoped;
 import com.vaadin.ui.UI;
@@ -27,13 +28,13 @@ import com.vaadin.ui.UI;
 @Target({ ElementType.FIELD, ElementType.TYPE })
 @Stereotype
 @ViewScoped
+@Qualifier
 public @interface ViewComposition {
 
     /**
      * @return name of the view, in navigable views this is the URI fragment in
      *         the browser
      */
-    @Nonbinding
     String name();
 
     /**

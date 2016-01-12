@@ -6,6 +6,7 @@ import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
 
+import org.apache.deltaspike.core.api.literal.AnyLiteral;
 import org.vaadin.platform.ui.BeanManagerAccessor;
 
 /**
@@ -33,7 +34,7 @@ public interface HasView<V extends HasPresenter> {
         }
 
         BeanManager beanManager = BeanManagerAccessor.getBeanManager();
-        Set<Bean<?>> viewCandidates = beanManager.getBeans(viewType);
+        Set<Bean<?>> viewCandidates = beanManager.getBeans(viewType, new AnyLiteral());
         if (viewCandidates.isEmpty()) {
             throw new RuntimeException("No candidate views available for type " + viewType.getCanonicalName()
                     + " check that the view type is annotated with @ViewComposition");
