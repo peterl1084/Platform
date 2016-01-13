@@ -1,21 +1,22 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
 	<parent>
 		<groupId>org.vaadin.platform</groupId>
 		<artifactId>platform-base</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>platform-demo</artifactId>
+	<artifactId>platform-viewdisplay</artifactId>
 
-	<packaging>war</packaging>
-
-	<name>Platform for Vaadin Demo</name>
-	<description>Deployable demo application of Platform for Vaadin.</description>
+	<name>Platform for Vaadin - Viewdisplay</name>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.vaadin.platform</groupId>
+			<artifactId>platform-config</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.vaadin.platform</groupId>
 			<artifactId>platform-ui</artifactId>
@@ -23,10 +24,14 @@
 		</dependency>
 		<dependency>
 			<groupId>org.vaadin.platform</groupId>
-			<artifactId>platform-viewdisplay</artifactId>
+			<artifactId>platform-sidemenu</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>javax.enterprise</groupId>
 			<artifactId>cdi-api</artifactId>
@@ -34,11 +39,11 @@
 
 		<dependency>
 			<groupId>com.vaadin</groupId>
-			<artifactId>vaadin-themes</artifactId>
+			<artifactId>vaadin-server</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.vaadin</groupId>
-			<artifactId>vaadin-client-compiled</artifactId>
+			<artifactId>vaadin-cdi</artifactId>
 		</dependency>
 	</dependencies>
 
@@ -48,27 +53,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 			</plugin>
-			<plugin>
-				<groupId>com.vaadin</groupId>
-				<artifactId>vaadin-maven-plugin</artifactId>
-				<version>${vaadin.version}</version>
-				<configuration>
-					<warSourceDirectory>${basedir}/src/main/resources</warSourceDirectory>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>resources</goal>
-							<goal>update-theme</goal>
-							<goal>compile-theme</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-			</plugin>
 		</plugins>
 	</build>
+
 </project>

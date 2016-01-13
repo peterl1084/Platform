@@ -93,11 +93,7 @@ class ConfigurationBean implements ConfigurationProvider {
 
     private List<Object> findConfigurationObjects() {
         Deque<Object> configs = new ArrayDeque<>();
-        Optional<Object> defaultConfigurationOptional = findDefaultConfigurationObject();
-        if (defaultConfigurationOptional.isPresent()) {
-            configs.addLast(defaultConfigurationOptional.get());
-        }
-
+        findDefaultConfigurationObject().forEach(config -> configs.addLast(config));
         findUserConfigurationObjects().forEach(config -> configs.addFirst(config));
         return Collections.unmodifiableList(new ArrayList<>(configs));
     }
@@ -106,14 +102,7 @@ class ConfigurationBean implements ConfigurationProvider {
         return StreamSupport.stream(userConfigurations.spliterator(), false).collect(Collectors.toList());
     }
 
-    private Optional<Object> findDefaultConfigurationObject() {
-        if (defaultConfigurations.isAmbiguous()) {
-            throw new RuntimeException(
-                    "More than one bean annotated with @PlatformDefaultConfiguration, please don't do that!");
-        } else if (defaultConfigurations.isUnsatisfied()) {
-            return Optional.empty();
-        } else {
-            return Optional.of(defaultConfigurations.get());
-        }
+    private List<Object> findDefaultConfigurationObject() {
+        return StreamSupport.stream(defaultConfigurations.spliterator(), false).collect(Collectors.toList());
     }
 }

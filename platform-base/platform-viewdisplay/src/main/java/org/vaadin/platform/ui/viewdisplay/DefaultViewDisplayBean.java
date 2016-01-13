@@ -5,7 +5,7 @@ import java.util.Optional;
 import javax.inject.Inject;
 
 import org.vaadin.platform.configuration.bean.BeanProvider;
-import org.vaadin.platform.ui.menu.SideMenu;
+import org.vaadin.platform.sidemenu.Menu;
 
 import com.vaadin.cdi.UIScoped;
 import com.vaadin.navigator.View;
@@ -13,7 +13,7 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 
 @UIScoped
-public class DefaultViewDisplayBean extends CustomComponent implements PlatformViewDisplay {
+class DefaultViewDisplayBean extends CustomComponent implements PlatformViewDisplay {
     private static final long serialVersionUID = 6108890114881391778L;
 
     private ViewArea viewArea;
@@ -28,14 +28,14 @@ public class DefaultViewDisplayBean extends CustomComponent implements PlatformV
         mainLayout.setSizeFull();
 
         viewArea = beanProvider.getReference(ViewArea.class);
-        Optional<SideMenu> menuOptional = beanProvider.getOptionalReference(SideMenu.class);
+        Optional<Menu> menuOptional = beanProvider.getOptionalReference(Menu.class);
 
         if (menuOptional.isPresent()) {
-            mainLayout.addComponent(menuOptional.get().asComponent());
+            mainLayout.addComponent(menuOptional.get().asCasted());
         }
 
-        mainLayout.addComponent(viewArea.asComponent());
-        mainLayout.setExpandRatio(viewArea.asComponent(), 1);
+        mainLayout.addComponent(viewArea.asCasted());
+        mainLayout.setExpandRatio(viewArea.asCasted(), 1);
 
         setCompositionRoot(mainLayout);
     }

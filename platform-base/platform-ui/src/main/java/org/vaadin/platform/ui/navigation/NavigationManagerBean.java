@@ -6,12 +6,12 @@ import javax.inject.Inject;
 
 import org.vaadin.platform.configuration.bean.BeanProvider;
 import org.vaadin.platform.ui.navigation.NavigationEvent.EventType;
-import org.vaadin.platform.ui.viewdisplay.PlatformViewDisplay;
 
 import com.vaadin.cdi.NormalUIScoped;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.navigator.ViewDisplay;
 import com.vaadin.navigator.ViewProvider;
 import com.vaadin.server.Page;
 import com.vaadin.server.Page.UriFragmentChangedEvent;
@@ -35,7 +35,7 @@ class NavigationManagerBean extends Navigator implements NavigationManager {
 
     @PostConstruct
     protected void initialize() {
-        PlatformViewDisplay viewDisplay = beanProvider.getReference(PlatformViewDisplay.class);
+        ViewDisplay viewDisplay = beanProvider.getReference(ViewDisplay.class);
         fragmentResolver = beanProvider.getReference(UriFragmentResolver.class);
         init(UI.getCurrent(), new UriFragmentHandler(Page.getCurrent()), viewDisplay);
         viewProvider = beanProvider.getReference(ViewProvider.class);
