@@ -1,5 +1,6 @@
 package org.vaadin.platform.configuration;
 
+import java.lang.annotation.Annotation;
 import java.util.Optional;
 
 /**
@@ -22,5 +23,5 @@ public interface ConfigurationProvider {
      * @return Optional of configured subType of given baseType or empty
      *         Optional if no such configuration exists.
      */
-    <T> Optional<Class<? extends T>> findConfiguredType(Class<T> baseType);
+    <T> Optional<Class<? extends T>> findConfiguredType(Class<T> baseType, Annotation... annotation);
 }

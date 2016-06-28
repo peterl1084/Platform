@@ -29,6 +29,10 @@ public interface IsNavigable extends View {
                 enterAwarePresenter.onEnter(event.getParameters());
             }
         }
+        if (this instanceof IsEnterAware) {
+            IsEnterAware thisObject = (IsEnterAware) this;
+            thisObject.onEnter(event.getParameters());
+        }
     }
 
     /**

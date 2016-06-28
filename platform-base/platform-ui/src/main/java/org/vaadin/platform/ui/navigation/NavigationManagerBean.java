@@ -1,11 +1,17 @@
 package org.vaadin.platform.ui.navigation;
 
-import javax.annotation.PostConstruct;
+import java.util.Optional;
+
 import javax.enterprise.event.Event;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
+import org.vaadin.platform.configuration.ConfigurationProvider;
+import org.vaadin.platform.configuration.InitialViewLiteral;
 import org.vaadin.platform.configuration.bean.BeanProvider;
+import org.vaadin.platform.ui.UIInitializedEvent;
 import org.vaadin.platform.ui.navigation.NavigationEvent.EventType;
+import org.vaadin.platform.ui.view.ViewComposition;
 
 import com.vaadin.cdi.NormalUIScoped;
 import com.vaadin.navigator.Navigator;
@@ -27,18 +33,30 @@ class NavigationManagerBean extends Navigator implements NavigationManager {
     @Inject
     private BeanProvider beanProvider;
 
+    @Inject
+    private ConfigurationProvider configProvider;
+
     private UriFragmentResolver fragmentResolver;
 
     private ViewProvider viewProvider;
 
     private String navigationState;
 
-    @PostConstruct
-    protected void initialize() {
+    protected void onUIInitialized(@Observes UIInitializedEvent event) {
         ViewDisplay viewDisplay = beanProvider.getReference(ViewDisplay.class);
         fragmentResolver = beanProvider.getReference(UriFragmentResolver.class);
         init(UI.getCurrent(), new UriFragmentHandler(Page.getCurrent()), viewDisplay);
         viewProvider = beanProvider.getReference(ViewProvider.class);
+
+        Optional<Class<? extends IsNavigable>> initialView = configProvider.findConfiguredType(IsNavigable.class,
+                new InitialViewLiteral());
+        if (initialView.isPresent()) {
+            if (initialView.get().isAnnotationPresent(ViewComposition.class)) {
+                ViewComposition viewAnnotation = initialView.get().getAnnotation(ViewComposition.class);
+                String viewId = viewAnnotation.name();
+                navigateTo(viewId);
+            }
+        }
     }
 
     @Override

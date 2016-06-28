@@ -5,7 +5,7 @@ import java.util.Optional;
 import javax.inject.Inject;
 
 import org.vaadin.platform.configuration.bean.BeanProvider;
-import org.vaadin.platform.sidemenu.Menu;
+import org.vaadin.platform.sidemenu.MainMenu;
 
 import com.vaadin.cdi.UIScoped;
 import com.vaadin.navigator.View;
@@ -28,7 +28,7 @@ class DefaultViewDisplayBean extends CustomComponent implements PlatformViewDisp
         mainLayout.setSizeFull();
 
         viewArea = beanProvider.getReference(ViewArea.class);
-        Optional<Menu> menuOptional = beanProvider.getOptionalReference(Menu.class);
+        Optional<MainMenu> menuOptional = beanProvider.getOptionalReference(MainMenu.class);
 
         if (menuOptional.isPresent()) {
             mainLayout.addComponent(menuOptional.get().asCasted());

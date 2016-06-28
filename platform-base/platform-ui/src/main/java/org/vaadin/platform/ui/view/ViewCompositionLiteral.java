@@ -2,6 +2,7 @@ package org.vaadin.platform.ui.view;
 
 import javax.enterprise.util.AnnotationLiteral;
 
+import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.UI;
 
 public class ViewCompositionLiteral extends AnnotationLiteral<ViewComposition> implements ViewComposition {
@@ -21,5 +22,25 @@ public class ViewCompositionLiteral extends AnnotationLiteral<ViewComposition> i
     @Override
     public Class<UI>[] uis() {
         return new Class[0];
+    }
+
+    @Override
+    public boolean showInMenu() {
+        return false;
+    }
+
+    @Override
+    public String caption() {
+        return "";
+    }
+
+    @Override
+    public FontAwesome icon() {
+        return FontAwesome.USER;
+    }
+
+    @Override
+    public int order() {
+        return 0;
     }
 }

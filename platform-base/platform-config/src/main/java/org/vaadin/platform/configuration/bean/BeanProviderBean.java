@@ -49,7 +49,7 @@ class BeanProviderBean implements BeanProvider {
 
     @Override
     public <T> Optional<T> getOptionalReference(Class<T> beanType, Annotation... qualifiers) {
-        Optional<Class<? extends T>> configured = configuration.findConfiguredType(beanType);
+        Optional<Class<? extends T>> configured = configuration.findConfiguredType(beanType, qualifiers);
         if (!configured.isPresent()) {
             return Optional.empty();
         }

@@ -9,7 +9,7 @@ import org.jglue.cdiunit.CdiRunner;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.vaadin.platform.configuration.ConfigurationBean;
+import org.vaadin.platform.configuration.ConfigurationProviderBean;
 import org.vaadin.platform.configuration.testdata.TestTypeA;
 import org.vaadin.platform.configuration.testdata.TestTypeB;
 
@@ -18,7 +18,7 @@ import org.vaadin.platform.configuration.testdata.TestTypeB;
 public class TestConfigurationNoConfigurationsFound {
 
     @Inject
-    private ConfigurationBean configuration;
+    private ConfigurationProviderBean configuration;
 
     @Test
     public void testFetchingDefaultConfiguration() {

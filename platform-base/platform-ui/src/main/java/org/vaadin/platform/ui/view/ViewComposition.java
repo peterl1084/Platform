@@ -10,6 +10,7 @@ import javax.enterprise.util.Nonbinding;
 import javax.inject.Qualifier;
 
 import com.vaadin.cdi.ViewScoped;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.UI;
 
 /**
@@ -42,4 +43,16 @@ public @interface ViewComposition {
      */
     @Nonbinding
     Class<? extends UI>[] uis() default { UI.class };
+
+    @Nonbinding
+    boolean showInMenu() default true;
+
+    @Nonbinding
+    String caption() default "";
+
+    @Nonbinding
+    FontAwesome icon() default FontAwesome.USER;
+
+    @Nonbinding
+    int order() default 0;
 }

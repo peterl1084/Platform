@@ -21,7 +21,7 @@ import org.vaadin.platform.ui.BeanManagerAccessor;
  *            <P>
  *            type of the presenter
  */
-public interface HasPresenter<P> {
+public interface HasPresenter<P extends HasView> {
 
     /**
      * @return reference to presenter P

@@ -5,12 +5,13 @@ import org.vaadin.platform.ui.navigation.IsNavigable;
 import org.vaadin.platform.ui.view.HasPresenter;
 import org.vaadin.platform.ui.view.ViewComposition;
 
+import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 
-@ViewComposition(name = Views.CUSTOMER_VIEW)
+@ViewComposition(name = Views.CUSTOMER_VIEW, showInMenu = true, caption = "Customers", icon = FontAwesome.ADJUST)
 public class CustomerView extends CustomComponent implements IsNavigable, HasPresenter<CustomerViewPresenter> {
     private static final long serialVersionUID = -8457497740824005459L;
 

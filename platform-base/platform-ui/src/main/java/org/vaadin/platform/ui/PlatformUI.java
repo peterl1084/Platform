@@ -1,17 +1,41 @@
 package org.vaadin.platform.ui;
 
+import javax.inject.Inject;
+
+import org.vaadin.platform.configuration.bean.BeanProvider;
+
+import com.vaadin.annotations.Theme;
+import com.vaadin.cdi.CDIUI;
+import com.vaadin.navigator.ViewDisplay;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinSession;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.UI;
 
 /**
- * PlatformUI is abstract base class for all UI's that wish to utilize Platform
- * for Vaadin functionality.
+ * PlatformUI is base class for all UI's that wish to utilize Platform for
+ * Vaadin functionality.
  */
-public abstract class PlatformUI extends UI {
+@CDIUI("")
+@Theme("platform")
+public class PlatformUI extends UI {
     private static final long serialVersionUID = -4457107924174041117L;
     private int uiId = -1;
     private String embedId;
+
+    @Inject
+    private javax.enterprise.event.Event<UIInitializedEvent> uiInitEventSource;
+
+    @Inject
+    private BeanProvider beanProvider;
+
+    @Override
+    protected void init(VaadinRequest request) {
+        ViewDisplay viewDisplay = beanProvider.getReference(ViewDisplay.class);
+        setContent((Component) viewDisplay);
+
+        uiInitEventSource.fire(new UIInitializedEvent());
+    }
 
     @Override
     public void doInit(VaadinRequest request, int uiId, String embedId) {

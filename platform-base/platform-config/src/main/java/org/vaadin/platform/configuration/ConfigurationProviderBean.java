@@ -1,5 +1,6 @@
 package org.vaadin.platform.configuration;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -19,7 +20,7 @@ import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
 @ApplicationScoped
-class ConfigurationBean implements ConfigurationProvider {
+class ConfigurationProviderBean implements ConfigurationProvider {
 
     @Inject
     @DefaultConfiguration
@@ -39,13 +40,22 @@ class ConfigurationBean implements ConfigurationProvider {
      */
     @Override
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public <T> Optional<Class<? extends T>> findConfiguredType(Class<T> baseType) {
+    public <T> Optional<Class<? extends T>> findConfiguredType(Class<T> baseType, Annotation... annotations) {
         try {
             List<Object> configurationObjects = findConfigurationObjects();
             for (Object object : configurationObjects) {
                 List<Method> methods = Arrays.asList(object.getClass().getMethods());
+                if (annotations != null && annotations.length > 0) {
+                    methods = methods.stream().filter(method -> areAllAnnotationsPresent(method, annotations))
+                            .collect(Collectors.toList());
+                }
 
                 for (Method method : methods) {
+                    List<Annotation> annotationList = Arrays.asList(annotations);
+                    if (annotationList.isEmpty() && method.getAnnotations().length > 0) {
+                        continue;
+                    }
+
                     Class<?> genericReturnType = extractGenericReturnType(method);
                     if (genericReturnType == null) {
                         continue;
@@ -65,6 +75,20 @@ class ConfigurationBean implements ConfigurationProvider {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private boolean areAllAnnotationsPresent(Method method, Annotation[] annotations) {
+        if (annotations == null) {
+            return true;
+        }
+
+        for (Annotation annotation : annotations) {
+            if (!method.isAnnotationPresent(annotation.annotationType())) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @SuppressWarnings("rawtypes")

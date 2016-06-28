@@ -7,7 +7,7 @@ import org.jglue.cdiunit.CdiRunner;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.vaadin.platform.configuration.ConfigurationBean;
+import org.vaadin.platform.configuration.ConfigurationProviderBean;
 import org.vaadin.platform.configuration.testdata.PlatformDefaultTestConfiguration;
 import org.vaadin.platform.configuration.testdata.PlatformUserTestConfiguration;
 import org.vaadin.platform.configuration.testdata.TestTypeA;
@@ -20,7 +20,7 @@ import org.vaadin.platform.configuration.testdata.TestTypeBExtension;
 public class TestConfigurationOverwrites {
 
     @Inject
-    private ConfigurationBean configuration;
+    private ConfigurationProviderBean configuration;
 
     @Test
     public void testFetchingDefaultConfiguration() {
