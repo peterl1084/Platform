@@ -21,6 +21,11 @@
 			<artifactId>platform-ui</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.vaadin.platform</groupId>
+			<artifactId>platform-data</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>javax.enterprise</groupId>

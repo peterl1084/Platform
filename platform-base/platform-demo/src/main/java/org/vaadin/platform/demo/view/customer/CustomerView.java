@@ -1,5 +1,7 @@
 package org.vaadin.platform.demo.view.customer;
 
+import java.util.List;
+
 import org.vaadin.platform.demo.Views;
 import org.vaadin.platform.ui.navigation.IsNavigable;
 import org.vaadin.platform.ui.view.HasPresenter;
@@ -33,5 +35,9 @@ public class CustomerView extends CustomComponent implements IsNavigable, HasPre
 
     public void showNotification() {
         Notification.show("Button clicked!");
+    }
+
+    public void populateCustomers(List<CustomerDTO> customers) {
+
     }
 }
